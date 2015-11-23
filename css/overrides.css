@@ -152,7 +152,9 @@ a.services-provided-wells:hover{
 .container-fluid.secondary{
 	background: #ffffff;
 }
-
+iframe, object, embed {
+        max-width: 100%;
+}
 footer{
 	background:#FFF;
 	color:#999;
