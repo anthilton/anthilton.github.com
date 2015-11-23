@@ -12,6 +12,7 @@
 	<link href="css/overrides.css" rel="stylesheet">
 	<link href="css/font-awesome.min.css" rel="stylesheet">
 	<link href="css/font-awesome-animation.min.css" rel="stylesheet">
+	<link href="css/parsley.css" rel="stylesheet">
 	
 	<link href='https://fonts.googleapis.com/css?family=Raleway:400,900|PT+Sans|Balthazar' rel='stylesheet' type='text/css'>
 
@@ -96,7 +97,7 @@
 							<ul class="nav navbar-nav">
 								<li><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
 								<li><a href="services.html">Services Provided</a></li>
-								<li class="active"><a href="#">Contact Us</a></li>
+								<li class="active"><a href="contactus.html">Contact Us</a></li>
 							</ul>
 						</div><!-- /.navbar-collapse -->
 					</div><!-- /.container-fluid -->
@@ -123,7 +124,7 @@
 					</div>
 				</div>
 			</section>
-						<section class="row" style="background:#F6F6F6; background: url(img/page-body.png) repeat scroll #f9f8f8;">
+			<section class="row" style="background:#F6F6F6; background: url(img/page-body.png) repeat scroll #f9f8f8;">
 				<article class="margin-top-10 col-lg-12 col-md-12 col-sm-12">
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12">
@@ -138,26 +139,26 @@
 						</div>
 					</div>
 					<div class="row">
-						<form id="send-email-form" class="col-lg-12 col-md-12 col-sm-12">
+						<form id="send-email-form" class="col-lg-12 col-md-12 col-sm-12"  data-parsley-validate>
 							<div class="form-group">
 								<label for="email-name">Name:*</label>
-								<input type="text" class="form-control" id="email-name" placeholder="Name">
+								<input type="text" class="form-control" id="email-name" placeholder="Name" data-parsley-required="true">
 							</div>
 							<div class="form-group">
 								<label for="email-address">Email:*</label>
-								<input type="email" class="form-control" id="email-address" placeholder="Email">
+								<input type="email" class="form-control" id="email-address" placeholder="Email" data-parsley-required="true">
 							</div>
 							<div class="form-group">
 								<label for="email-number">Number:*</label>
-								<input type="tel" class="form-control" id="email-number" placeholder="Number">
+								<input type="tel" class="form-control" id="email-number" placeholder="Number" data-parsley-required="true">
 							</div>
 							<div class="form-group">
 								<label for="email-message">Message:*</label>
-								<textarea class="form-control" id="email-message" placeholder="Message" style="max-width:100%; max-height:100px; height:100px;"></textarea>
+								<textarea class="form-control" id="email-message" placeholder="Message" style="max-width:100%; max-height:100px; height:100px;" data-parsley-required="true"></textarea>
 							</div>
 							<div class="form-group text-right">
 								<button id="clear-email" class="btn btn-secondary"><i class="fa fa-refresh"></i> Clear</button>
-								<button type="submit" class="btn btn-primary"><i class="fa fa-envelope"></i> Send</button>
+								<button id="submit-email" type="submit" class="btn btn-primary"><i class="fa fa-envelope"></i> Send</button>
 							</div>
 						</form>
 					</div>
@@ -185,17 +186,33 @@
 		<script src="js/jquery-1.11.3.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="js/bootstrap.min.js"></script>
-		
+		<!-- Vaidation -->
+		<script src="js/parsley.min.js"></script>
 		<script>
+			function clearEmailFields(){
+				$("#email-name").val("");
+				$("#email-address").val("");
+				$("#email-number").val("");
+				$("#email-message").val("");
+			};
 			$(document).ready(function(){
+				var validator = $('#send-email-form').parsley();
 				$('#clear-email').on("click",function(){
-					$("#email-name").val("");
-					$("#email-address").val("");
-					$("#email-number").val("");
-					$("#email-message").val("");
+					clearEmailFields();
 				});
 				var request;
+				var emailTemplate;
+				$.get( "email_template.html", function( data ) {
+					var $data = $.parseHTML(data);
+					emailTemplate = $data.find("#container");
+					alert( "Load was performed." );
+				});
 				$('#send-email-form').on("submit",function(event){
+					//test validator
+					
+					if(!validator.isValid()){
+						return false;
+					}
 					// Abort any pending request
 					if (request) {
 						request.abort();
@@ -213,16 +230,31 @@
 					$inputs.prop("disabled", true);
 
 					// Fire off the request to /form.php
+					var 
 					request = $.ajax({
-						url: "emailRequestForm.php",
-						type: "post",
-						data: serializedData
-					});
+						type: 'POST',
+						url: 'https://mandrillapp.com/api/1.0/messages/send.json',
+						data: {
+							'key': 'ovVqO3_aJHVaIpGZPHPn7A',
+							'message': {
+								'from_email': 'anthilton@gmail.com',
+								'to': [
+									{
+										'email': 'anthilton@gmail.com',
+										'name': 'Anthony',
+										'type': 'to'
+									}
+								],
+							'autotext': 'true',
+							'subject': 'YOUR SUBJECT HERE!',
+							'html': emailTemplate
+						}
+					  }
+					 });
 
 					// Callback handler that will be called on success
 					request.done(function (response, textStatus, jqXHR){
-						// Log a message to the console
-						console.log("Hooray, it worked!");
+						clearEmailFields();
 					});
 
 					// Callback handler that will be called on failure

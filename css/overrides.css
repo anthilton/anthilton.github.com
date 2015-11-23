@@ -30,7 +30,7 @@ body{
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
 	color:#000063;
-	font-family: 'Balthazar', serif;
+	font-family: sans-serif, Arial, Helvetica;
 	font-weight:700;
 }
 p{
@@ -114,6 +114,9 @@ p{
 	margin-bottom:20px;
 	margin-bottom:20px;
 }
+.well.services-provided-wells{
+	background:#FFF;
+}
 a.services-provided-wells{
 	display:block;
 	cursor:pointer;
@@ -128,7 +131,7 @@ a.services-provided-wells:hover{
 }
 .services-provided-wells .icon{
 	border-radius:50%; 
-	background:#FFF; 
+	background:#F0EEED; 
 	padding:50px; 
 	display:inline-block;
 }
@@ -137,7 +140,7 @@ a.services-provided-wells:hover{
 }
 .logo{
 	width:100%;
-	max-width:225px;
+	max-width:250px;
 }
 
 .container-fluid.primary{
@@ -159,6 +162,12 @@ footer{
 	-moz-box-shadow: 0px -10px 10px -5px rgba(0,0,0,0.15); 
 	box-shadow: 0px -10px 10px -5px rgba(0,0,0,0.15);
 	padding-top: 20px;
+}
+footer .contact-information{
+	color:#000063;	
+}
+footer .contact-information li{
+	margin-top:10px;
 }
 .text-right{
 	text-align:right;
@@ -207,11 +216,10 @@ footer{
 	border-bottom: 2px solid #CE0101;
 }
 
-.banner-image-text{
-	font-family: 'Balthazar', serif; 
+.banner-image-text{ 
 	font-weight: 900; 
 	margin:0px; 
-	color:#CE0202; 
+	color:#FFFFFF; 
 	position: absolute; 
 	width: 50%; 
 	margin-left: auto;
@@ -223,16 +231,70 @@ footer{
 	transform: translateY(-50%);
 	font-size:50px;
 	z-index:2;
+	text-shadow: 1px 0px 9px rgb(0, 0, 0);
+}
+.menu-links{
+	padding-top:20px;
 }
 @media (min-width: 768px) {
 	.banner-image-text{
-		font-size:40px;
+		font-size:43px;
+		width: 85%; 
+	}
+	.menu-links{
+		padding-top:45px;
+	}
+}
+@media (min-width: 992px) {
+	.social-icons li a{
+		padding:10px 10px;
+		width: 40px;
+    	height: 40px;
+	}
+	.menu-links{
+		padding-top:30px;
+	}
+}
+@media (min-width: 782px) {
+	.banner-image-text{
+		width: 80%; 
+	}
+}
+@media (min-width: 885px) {
+	.banner-image-text{
+		width: 74%; 
+	}
+}
+@media (min-width: 952px) {
+	.banner-image-text{
+		width: 68%; 
+	}
+}
+@media (min-width: 1042px) {
+	.banner-image-text{
+		width: 62%; 
+	}
+}
+@media (min-width: 1165px) {
+	.banner-image-text{
+		width: 58%; 
+	}
+}
+@media (min-width: 1220px) {
+	.banner-image-text{
+		width: 52%; 
+	}
+}
+@media (min-width: 1336px) {
+	.banner-image-text{
+		width: 50%; 
 	}
 }
 @media (max-width: 768px) {
 	.banner-image-text{
-		font-size:30px;
+		font-size:22px;
 	}
+	
 }
 .navbar-default .navbar-toggle{
 	border-color:transparent;
