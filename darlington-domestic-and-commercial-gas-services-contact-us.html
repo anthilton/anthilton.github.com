@@ -206,12 +206,7 @@
 					clearEmailFields();
 				});
 				var request;
-				var emailTemplate;
-				$.get( "email_template.html", function( data ) {
-					var $data = $.parseHTML(data);
-					emailTemplate = $data.find("#container");
-					alert( "Load was performed." );
-				});
+
 				$('#send-email-form').on("submit",function(event){
 					//test validator
 					
@@ -242,7 +237,7 @@
 						data: {
 							'key': 'ovVqO3_aJHVaIpGZPHPn7A',
 							'message': {
-								'from_email': 'anthilton@gmail.com',
+								'from_email': $('#email-address').val(),
 								'to': [
 									{
 										'email': 'anthilton@gmail.com',
@@ -251,8 +246,8 @@
 									}
 								],
 							'autotext': 'true',
-							'subject': 'YOUR SUBJECT HERE!',
-							'html': emailTemplate
+							'subject': 'HHPM Website',
+							'html': $('#email-message').val()
 						}
 					  }
 					 });
